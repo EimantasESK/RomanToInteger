@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RomanToInteger
 {
@@ -9,51 +10,29 @@ namespace RomanToInteger
         {
             static int RomanToInt(string s)
             {
-                char[] num = s.ToCharArray();
                 int sum = 0;
-                int[] result = new int[50];
-                for (int i = num.Length - 1; i >= 0; i--)
-                {
-                        if (num[i].ToString() == "I")
-                        {
-                            result[i] = 1;
-                        }
-                        if (num[i].ToString() == "V")
-                        {
-                            result[i] = 5;
-                        }
-                        if (num[i].ToString() == "X")
-                        {
-                            result[i] = 10;
-                        }
-                        if (num[i].ToString() == "L")
-                        {
-                            result[i] = 50;
-                        }
-                        if (num[i].ToString() == "C")
-                        {
-                            result[i] = 100;
-                        }
-                        if (num[i].ToString() == "D")
-                        {
-                            result[i] = 500;
-                        }
-                        if (num[i].ToString() == "M")
-                        {
-                            result[i] = 1000;
-                        }
-                }
 
-                for (int i = 0; i < num.Length; i++)
+                Dictionary<char, int> number = new Dictionary<char, int>();
+                number.Add('I', 1);
+                number.Add('V', 5);
+                number.Add('X', 10);
+                number.Add('L', 50);
+                number.Add('C', 100);
+                number.Add('D', 500);
+                number.Add('M', 1000);
+
+                int sec = 0;
+
+                for (int i = s.Length - 1; i >= 0; i--)
                 {
-                    if (result[i] >= result[i + 1])
+                    if (number[s[i]] >= sec)
                     {
-                        sum += result[i];
+                        sum += number[s[i]];
                     }
-                    if (result[i] < result[i + 1])
-                    {
-                        sum -= result[i];
-                    }
+                    else
+                        sum -= number[s[i]];
+
+                    sec = number[s[i]];
                 }
 
                 return sum;
